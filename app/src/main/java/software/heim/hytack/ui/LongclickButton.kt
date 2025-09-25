@@ -20,6 +20,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
@@ -29,6 +31,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun LongClickButton(onClick: () -> Unit, onLongClick: () -> Unit, modifier: Modifier = Modifier, content: @Composable ()-> Unit) {
 
+    val haptic = LocalHapticFeedback.current
     val scope = rememberCoroutineScope()
     val interactionSource = remember { MutableInteractionSource() }
     var lastDown by remember { mutableLongStateOf(0L) }
@@ -44,6 +47,7 @@ fun LongClickButton(onClick: () -> Unit, onLongClick: () -> Unit, modifier: Modi
                     scope.launch {
                         delay(600)
                         if (pressed){
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                             onLongClick()
                         }
                         pressed = false

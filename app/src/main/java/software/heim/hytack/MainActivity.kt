@@ -10,10 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import software.heim.hytack.ui.AnimatedFAB
 import software.heim.hytack.ui.HydrationViewModel
 import software.heim.hytack.ui.MainScreen
 import software.heim.hytack.ui.theme.HytackTheme
@@ -24,9 +24,15 @@ class MainActivity : ComponentActivity() {
         val vm = HydrationViewModel(application)
         enableEdgeToEdge()
         setContent {
+            val historyVisible by vm.historyVisible.collectAsState(false)
             HytackTheme {
-                Scaffold(modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.displayCutout)) { innerPadding ->
-                    MainScreen(viewModel = vm)
+                Scaffold(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .windowInsetsPadding(WindowInsets.displayCutout), floatingActionButton = {
+                        AnimatedFAB(historyVisible, {vm.exportHistory()})
+                    }) { innerPadding ->
+                    MainScreen(modifier = Modifier.padding(innerPadding), viewModel = vm)
                 }
             }
         }

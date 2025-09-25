@@ -34,6 +34,7 @@ import software.heim.hytack.data.domain.milliliter
 fun AddShortcutDialog(
     onDisMissRequest: () -> Unit,
     onShortcutAdded: (millis: Milliliter) -> Unit,
+    heading: String,
     modifier: Modifier = Modifier
 ) {
     val millis = rememberTextFieldState()
@@ -52,7 +53,7 @@ fun AddShortcutDialog(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text("Add Drink Shortcut", style = MaterialTheme.typography.headlineMedium)
+                Text(heading, style = MaterialTheme.typography.headlineMedium)
                 TextField(
                     state = millis,
                     keyboardOptions = KeyboardOptions(
