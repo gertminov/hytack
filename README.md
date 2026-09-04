@@ -1,5 +1,5 @@
 # Hytrack
-simple hytration tracker
+simple hytration tracker built with kotlin and jetpack compose
 
 
  <table><tr><td>
